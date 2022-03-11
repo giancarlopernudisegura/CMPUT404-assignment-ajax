@@ -24,6 +24,7 @@
 import flask
 from flask import Flask, request
 import json
+from http import HTTPStatus
 app = Flask(__name__)
 app.debug = True
 
@@ -57,7 +58,7 @@ class World:
 # you can test your webservice from the commandline
 # curl -v   -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/entity/X -d '{"x":1,"y":1}' 
 
-myWorld = World()          
+myWorld = World()
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
 # this should come with flask but whatever, it's not my project.
@@ -74,27 +75,35 @@ def flask_post_json():
 @app.route("/")
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return None
+    return app.send_static_file('index.html'), HTTPStatus.OK
+
+@app.route("/json2.js")
+def json2():
+    '''Return something coherent here.. perhaps redirect to /static/index.html '''
+    return app.send_static_file('json2.js'), HTTPStatus.OK
 
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):
     '''update the entities via this interface'''
-    return None
+    data = flask_post_json()
+    myWorld.set(entity, data)
+    return data, HTTPStatus.OK
 
 @app.route("/world", methods=['POST','GET'])    
 def world():
     '''you should probably return the world here'''
-    return None
+    return myWorld.world(), HTTPStatus.OK
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
-    return None
+    return myWorld.get(entity), HTTPStatus.OK
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     '''Clear the world out!'''
-    return None
+    myWorld.clear()
+    return dict(), HTTPStatus.OK
 
 if __name__ == "__main__":
     app.run()
