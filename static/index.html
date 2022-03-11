@@ -20,11 +20,34 @@
     <style>
         body {
             margin: 0;
+            cursor: crosshair;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .ui {
             padding: 1em;
             position: absolute;
+        }
+
+        button {
+            all: unset;
+            border: 1px solid white;
+            border-radius: 5px;
+            color: white;
+            padding: 0.5em 1em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc2;
+        }
+
+        button:active {
+            background-color: #70707022;
         }
     </style>
 </head>
