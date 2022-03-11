@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Copyright 2013 Abram Hindle
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,7 +37,7 @@ app.debug = True
 class World:
     def __init__(self):
         self.clear()
-        
+
     def update(self, entity, key, value):
         entry = self.space.get(entity,dict())
         entry[key] = value
@@ -51,12 +51,12 @@ class World:
 
     def get(self, entity):
         return self.space.get(entity,dict())
-    
+
     def world(self):
         return self.space
 
 # you can test your webservice from the commandline
-# curl -v   -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/entity/X -d '{"x":1,"y":1}' 
+# curl -v   -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/entity/X -d '{"x":1,"y":1}'
 
 myWorld = World()
 
@@ -89,12 +89,12 @@ def update(entity):
     myWorld.set(entity, data)
     return data, HTTPStatus.OK
 
-@app.route("/world", methods=['POST','GET'])    
+@app.route("/world", methods=['POST','GET'])
 def world():
     '''you should probably return the world here'''
     return myWorld.world(), HTTPStatus.OK
 
-@app.route("/entity/<entity>")    
+@app.route("/entity/<entity>")
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
     return myWorld.get(entity), HTTPStatus.OK
